@@ -1,0 +1,40 @@
+<section class="page">
+  <div class="page-label">Labour cost report</div>
+  <div class="data-section">
+    <table class="data-table" *ngIf="dataReady">
+      <thead>
+        <tr>
+          <th *ngFor="let header of headers; let i = index" scope="col" [ngClass]="'data-header h' + getClass(i)" (tap)="sort(i)"
+            (click)="sort(i)">{{header}} 
+
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let elem of data; let i = index">
+
+            <th [ngClass]="'td' + getClass(0)">{{elem.name}}</th>
+            <td [ngClass]="'numeric-column  td' + getClass(1)">{{elem.workerCount }}</td>
+            <td [ngClass]="'numeric-column  td' + getClass(2)">{{(!isEmpty(elem.complianceStats)? elem.complianceStats.Total: 0) | number: '1.0-2'}}%</td>
+            <td [ngClass]="'numeric-column  td' + getClass(3)">{{elem.grossPayTotal | number: '1.0-2'}}</td>
+            <td [ngClass]="'numeric-column  td' + getClass(4)">{{elem.payrollAdminTotal > 0? (elem.payrollAdminTotal | number: '1.0-2') : '-'}}</td>
+            <td [ngClass]="'numeric-column  td' + getClass(5)">{{elem.labourCostTotal | number: '1.0-2'}}</td>
+            <td [ngClass]="'numeric-column td' + getClass(6)">{{(elem.workerCount / total.workerCount * 100 )| number: '1.0-2'}}%</td>
+
+          </tr>
+      </tbody>
+      <tfoot>
+        <tr class="tf"></tr>
+        <tr class="tf">
+          <td class="tf-total">Total</td>
+          <td class="tf-sum">{{total.workerCount}}</td>
+          <td class="tf-3">{{(!isEmpty(total.complianceStats)? total.complianceStats.Total: 0) | number: '1.0-2' }}%</td>
+          <td class="tf-4">{{total.grossPayTotal | number: '1.0-2'}}</td>
+          <td class="tf-5">{{total.payrollAdminTotal > 0? (total.payrollAdminTotal | number: '1.0-2') : '-' }}</td>
+          <td class="tf-6">{{total.labourCostTotal| number: '1.0-2'}}</td>
+          <td class="tf-7">100%</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</section>
